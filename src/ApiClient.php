@@ -99,7 +99,7 @@ class ApiClient
         string $accountId,
         AbsoluteDate $startDate = null,
         AbsoluteDate $endDate = null
-    ): \Iterator {
+    ): TransactionIterator {
         return new TransactionIterator($this, $accountId, $startDate, $endDate);
     }
 }
