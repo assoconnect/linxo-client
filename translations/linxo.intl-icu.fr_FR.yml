@@ -5,7 +5,7 @@ account_status:
   NOT_FOUND: 'Compte bancaire introuvable'
   CLOSED: 'Compte bancaire clos'
   SUSPENDED: 'En attente de vérification par Linxo'
-  PENDING_CONSENT: 'En attente de consentement PSD2'
+  PENDING_CONSENT: 'En attente de consentement DSP2'
 transaction_types:
   CREDIT: 'Opération au crédit'
   DEBIT: 'Opération au débit'
