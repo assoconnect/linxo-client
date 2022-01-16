@@ -18,6 +18,11 @@ class TransactionDto
     private string $type;
     private AbsoluteDate $date;
 
+    /**
+     * Possible transaction types
+     * @link https://developers.linxo.com/reference-accounts-api/#operation/getTransaction
+     * @see translations/linxo.intl-icu.[locale].yml
+     */
     public const TYPE_CREDIT = 'CREDIT';
     public const TYPE_DEBIT = 'DEBIT';
     public const TYPE_INTEREST = 'INTEREST';

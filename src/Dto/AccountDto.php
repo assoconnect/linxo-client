@@ -18,6 +18,7 @@ class AccountDto
     /**
      * Possible account status
      * @link https://developers.linxo.com/reference-accounts-api/#section/Account-statuses
+     * @see translations/linxo.intl-icu.[locale].yml
      */
     public const STATUS_MANUAL = 'MANUAL';
     public const STATUS_ACTIVE = 'ACTIVE';
