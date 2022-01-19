@@ -6,7 +6,7 @@ account_status:
   CLOSED: 'Compte bancaire clos'
   SUSPENDED: 'En attente de vérification par Linxo'
   PENDING_CONSENT: 'En attente de consentement DSP2'
-transaction_types:
+transaction_type:
   CREDIT: 'Opération au crédit'
   DEBIT: 'Opération au débit'
   INTEREST: 'Intêrets créditeurs'

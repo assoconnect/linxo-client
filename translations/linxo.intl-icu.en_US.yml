@@ -6,7 +6,7 @@ account_status:
   CLOSED: 'Closed bank account'
   SUSPENDED: 'Pending verification by Linxo'
   PENDING_CONSENT: 'Pending PSD2 consent'
-transaction_types:
+transaction_type:
   CREDIT: 'Revenue'
   DEBIT: 'Expense'
   INTEREST: 'Interest'

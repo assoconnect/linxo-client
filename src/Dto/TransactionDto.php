@@ -7,6 +7,7 @@ namespace AssoConnect\LinxoClient\Dto;
 use AssoConnect\PHPDate\AbsoluteDate;
 use Money\Currency;
 use Money\Money;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class TransactionDto
 {

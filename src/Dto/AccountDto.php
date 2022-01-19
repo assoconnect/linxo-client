@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AssoConnect\LinxoClient\Dto;
 
 use Money\Currency;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class AccountDto
 {
@@ -61,6 +62,11 @@ class AccountDto
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getLocalizedStatus(): TranslatableMessage
+    {
+        return new TranslatableMessage('account_status.' . $this->status, [], 'linxo');
     }
 
     public function getCurrency(): Currency
