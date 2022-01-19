@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AssoConnect\LinxoClient\Tests;
 
 use AssoConnect\LinxoClient\ApiClient;
+use AssoConnect\LinxoClient\AuthClient;
 use AssoConnect\PHPDate\AbsoluteDate;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -21,7 +22,7 @@ class ApiClientTest extends TestCase
         $mock = new MockHandler($queue);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
-        return new ApiClient($client);
+        return new ApiClient($client, 'https://wwws.linxo.com');
     }
 
     public function testGetCurrentUserCorrectlyParseTheApiResponse(): void

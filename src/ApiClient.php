@@ -16,12 +16,19 @@ use Koriym\HttpConstants\Method;
 class ApiClient
 {
     private ClientInterface $client;
+    private string $webEndpoint;
 
     private const VERSION = 'v2.1';
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, string $webEndpoint)
     {
         $this->client = $client;
+        $this->webEndpoint = $webEndpoint;
+    }
+
+    public function getWebEndpoint(): string
+    {
+        return $this->webEndpoint;
     }
 
     private function request(string $uri, array $query = []): array
