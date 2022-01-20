@@ -30,12 +30,17 @@ class ApiClient
         return json_decode($response->getBody()->__toString(), true);
     }
 
+    /**
+     * Return the current logged-in user
+     * @link https://developers.linxo.com/reference-accounts-api#operation/getUser
+     */
     public function getCurrentUser(): UserDto
     {
         return new UserDto($this->request('/users/me'));
     }
 
     /**
+     * @link https://developers.linxo.com/reference-accounts-api#operation/getConnectionsUsingGET
      * @return ConnectionDto[]
      */
     public function getConnections(): iterable
@@ -51,6 +56,7 @@ class ApiClient
     }
 
     /**
+     * @link https://developers.linxo.com/reference-accounts-api#operation/getAccounts
      * @return AccountDto[]
      */
     public function getAccounts(): iterable
@@ -60,12 +66,16 @@ class ApiClient
         }, $this->request('/accounts'));
     }
 
+    /**
+     * @link https://developers.linxo.com/reference-accounts-api#operation/getAccount
+     */
     public function getAccount(string $id): AccountDto
     {
         return new AccountDto($this->request('/accounts/' . $id));
     }
 
     /**
+     * @link https://developers.linxo.com/reference-accounts-api#operation/getTransactions
      * @return TransactionDto[]
      */
     public function getTransactions(
@@ -95,6 +105,9 @@ class ApiClient
         }, $transactions);
     }
 
+    /**
+     * Return an iterator to loop through all transactions
+     */
     public function getTransactionsIterator(
         string $accountId,
         AbsoluteDate $startDate = null,

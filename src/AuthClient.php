@@ -52,6 +52,9 @@ class AuthClient extends GenericProvider
         ]);
     }
 
+    /**
+     * Create a Guzzle-powered API Client from a valid access token
+     */
     public function createApiClient(string $token): ApiClient
     {
         $client = new Client([
@@ -65,16 +68,25 @@ class AuthClient extends GenericProvider
         return new ApiClient($client);
     }
 
+    /**
+     * Exchange a code for a token as part of the Authorization Code grant
+     */
     public function getTokenFromCode(string $code): AccessTokenInterface
     {
         return $this->getAccessToken('authorization_code', ['code' => $code]);
     }
 
+    /**
+     * Get new tokens (access and refresh) from an existing refresh token
+     */
     public function refreshToken(string $refreshToken): AccessTokenInterface
     {
         return $this->getAccessToken('refresh_token', ['refresh_token' => $refreshToken]);
     }
 
+    /**
+     * Web endpoint to access Linxo as an end-user
+     */
     public function getWebEndpoint(): string
     {
         return $this->webEndpoint;

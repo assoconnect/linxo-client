@@ -8,6 +8,11 @@ use AssoConnect\LinxoClient\ApiClient;
 use AssoConnect\LinxoClient\Dto\TransactionDto;
 use AssoConnect\PHPDate\AbsoluteDate;
 
+/**
+ * Iterator to loop through all available transactions
+ *
+ * It browses through the API pagination system
+ */
 class TransactionIterator implements \Iterator
 {
     private ApiClient $apiClient;
