@@ -62,10 +62,7 @@ class AuthClient extends GenericProvider
             ],
         ]);
 
-        return new ApiClient(
-            $client,
-            $this->webEndpoint
-        );
+        return new ApiClient($client);
     }
 
     public function getTokenFromCode(string $code): AccessTokenInterface
@@ -76,5 +73,10 @@ class AuthClient extends GenericProvider
     public function refreshToken(string $refreshToken): AccessTokenInterface
     {
         return $this->getAccessToken('refresh_token', ['refresh_token' => $refreshToken]);
+    }
+
+    public function getWebEndpoint(): string
+    {
+        return $this->webEndpoint;
     }
 }

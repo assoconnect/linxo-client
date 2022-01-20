@@ -22,7 +22,7 @@ class ApiClientTest extends TestCase
         $mock = new MockHandler($queue);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
-        return new ApiClient($client, 'https://wwws.linxo.com');
+        return new ApiClient($client);
     }
 
     public function testGetCurrentUserCorrectlyParseTheApiResponse(): void
