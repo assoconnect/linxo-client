@@ -40,7 +40,7 @@ class MockMiddleware
         return new Response(200, ['content-type' => 'json'], json_encode($body));
     }
 
-    private function findTheRightResponse(RequestInterface $request)
+    private function findTheRightResponse(RequestInterface $request): ?Response
     {
         $path = $request->getUri()->getPath();
 
@@ -51,12 +51,12 @@ class MockMiddleware
 
         // TRANSACTIONS
         if (strpos($path, '/' . ApiClient::VERSION . '/transactions') === 0) {
-            $this->respondToTransactionsRequest($request);
+            return $this->respondToTransactionsRequest($request);
         }
 
         // USERS
         if (strpos($path, '/' . ApiClient::VERSION . '/users') === 0) {
-            return $this->respondToUsersRequest($request);
+            return $this->respondToUsersRequest();
         }
 
         return null;
@@ -99,12 +99,12 @@ class MockMiddleware
         }
         if (array_key_exists('start_date', $query)) {
             $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
-                return $query['start_date'] <= $transaction['start_date'];
+                return $query['start_date'] <= $transaction['date'];
             });
         }
         if (array_key_exists('end_date', $query)) {
             $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
-                return $transaction['end_date'] <= $query['end_date'];
+                return $transaction['date'] <= $query['end_date'];
             });
         }
         if (array_key_exists('limit', $query) && array_key_exists('page', $query)) {
@@ -114,7 +114,7 @@ class MockMiddleware
         return $this->buildResponse($filtered);
     }
 
-    private function respondToUsersRequest(RequestInterface $request): ?Response
+    private function respondToUsersRequest(): ?Response
     {
         if (null === $this->me) {
             return null;

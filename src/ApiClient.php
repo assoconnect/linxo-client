@@ -92,11 +92,11 @@ class ApiClient
         ];
 
         if (null !== $startDate) {
-            $query['start_date'] = $startDate->startsAt(new \DateTimeZone('Europe/Paris'));
+            $query['start_date'] = $startDate->startsAt(new \DateTimeZone('Europe/Paris'))->getTimestamp();
         }
 
         if (null !== $endDate) {
-            $query['start_date'] = $endDate->startsAt(new \DateTimeZone('Europe/Paris'));
+            $query['end_date'] = $endDate->startsAt(new \DateTimeZone('Europe/Paris'))->getTimestamp();
         }
 
         $transactions = $this->request('/transactions', $query);
