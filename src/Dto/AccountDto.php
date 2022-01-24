@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AssoConnect\LinxoClient\Dto;
 
 use Money\Currency;
+use Money\Money;
 use Symfony\Component\Translation\TranslatableMessage;
 
 class AccountDto
@@ -14,6 +15,7 @@ class AccountDto
     private string $name;
     private ?string $iban;
     private string $status;
+    private Money $balance;
     private Currency $currency;
 
     /**
@@ -37,6 +39,7 @@ class AccountDto
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
         $this->currency = new Currency($data['currency']);
+        $this->balance = new Money($data['balance'] * 100, $this->currency);
     }
 
     public function getId(): string
@@ -67,6 +70,11 @@ class AccountDto
     public function getLocalizedStatus(): TranslatableMessage
     {
         return new TranslatableMessage('account_status.' . $this->status, [], 'linxo');
+    }
+
+    public function getBalance(): Money
+    {
+        return $this->balance;
     }
 
     public function getCurrency(): Currency

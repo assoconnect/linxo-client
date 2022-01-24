@@ -4,21 +4,14 @@ declare(strict_types=1);
 
 namespace AssoConnect\LinxoClient\Test;
 
-use AssoConnect\LinxoClient\ApiClient;
 use AssoConnect\LinxoClient\Dto\AccountDto;
 use AssoConnect\LinxoClient\Dto\TransactionDto;
-use AssoConnect\LinxoClient\Dto\UserDto;
 use AssoConnect\PHPDate\AbsoluteDate;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use function _PHPStan_70b6e53dc\RingCentral\Psr7\build_query;
 
 class MockFactory
 {
     public const AUTHORIZATION_CODE = '';
     public const OLD_REFRESH_TOKEN = '';
-
-    private const ENDPOINT = 'https://sandbox-api.linxo.com';
 
     private MockMiddleware $middleware;
 
@@ -50,6 +43,7 @@ class MockFactory
             'iban' => 'FR0512739000308643578317D43',
             'status' => AccountDto::STATUS_ACTIVE,
             'currency' => 'EUR',
+            'balance' => 100,
         ], $body);
 
         $this->middleware->stackAccount($body);

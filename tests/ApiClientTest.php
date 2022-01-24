@@ -91,6 +91,7 @@ class ApiClientTest extends TestCase
         self::assertSame('COMPTE COURANT - ASSNÎMES / CA', $accounts[0]->getName());
         self::assertSame('ACTIVE', $accounts[0]->getStatus());
         self::assertEquals(new Currency('EUR'), $accounts[0]->getCurrency());
+        self::assertSame('244146', $accounts[0]->getBalance()->getAmount());
 
         self::assertSame('63723417', $accounts[1]->getId());
         self::assertSame('4422323', $accounts[1]->getConnectionId());
@@ -98,6 +99,7 @@ class ApiClientTest extends TestCase
         self::assertSame('COMPTE COURANT - ASSNÎMES / Futsal', $accounts[1]->getName());
         self::assertSame('ACTIVE', $accounts[1]->getStatus());
         self::assertEquals(new Currency('EUR'), $accounts[1]->getCurrency());
+        self::assertSame('76010', $accounts[1]->getBalance()->getAmount());
     }
 
     public function testGetAccountCorrectlyParseTheApiResponse(): void
@@ -114,6 +116,7 @@ class ApiClientTest extends TestCase
         self::assertSame('COMPTE COURANT / CA', $account->getName());
         self::assertSame('ACTIVE', $account->getStatus());
         self::assertEquals(new Currency('EUR'), $account->getCurrency());
+        self::assertSame('244146', $account->getBalance()->getAmount());
     }
 
     public function testGetTransactionsCorrectlyParseTheApiResponse(): void

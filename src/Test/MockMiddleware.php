@@ -76,22 +76,22 @@ class MockMiddleware
 
             parse_str($request->getUri()->getQuery(), $query);
             if (array_key_exists('account_id', $query)) {
-                $transactions = array_filter($transactions, function(array $transaction) use ($query): bool {
+                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
                     return $query['account_id'] === $transaction['account_id'];
                 });
             }
             if (array_key_exists('start_date', $query)) {
-                $transactions = array_filter($transactions, function(array $transaction) use ($query): bool {
+                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
                     return $query['start_date'] <= $transaction['start_date'];
                 });
             }
             if (array_key_exists('end_date', $query)) {
-                $transactions = array_filter($transactions, function(array $transaction) use ($query): bool {
+                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
                     return $transaction['end_date'] <= $query['end_date'];
                 });
             }
             if (array_key_exists('limit', $query) && array_key_exists('page', $query)) {
-                $transactions = array_slice($transactions, $limit * ($page - 1), $limit);
+                $transactions = array_slice($transactions, $query['limit'] * ($query['page'] - 1), $query['limit']);
             }
 
             return $this->buildResponse($transactions);
