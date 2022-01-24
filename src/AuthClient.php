@@ -13,8 +13,8 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 class AuthClient extends GenericProvider
 {
     private const ENDPOINT_API = [
-        self::ENV_SANDBOX => 'https://sandbox-api.linxo.com',
         self::ENV_PROD => 'https://api.linxo.com',
+        self::ENV_SANDBOX => 'https://sandbox-api.linxo.com',
     ];
 
     private const ENDPOINT_AUTH = [
@@ -57,15 +57,18 @@ class AuthClient extends GenericProvider
      */
     public function createApiClient(string $token): ApiClient
     {
-        $client = new Client([
+        return new ApiClient(new Client($this->getGuzzleOptions($token)));
+    }
+
+    protected function getGuzzleOptions(string $token): array
+    {
+        return [
             'base_uri' => $this->apiEndpoint,
             'headers' => [
                 RequestHeader::AUTHORIZATION => 'Bearer ' . $token,
                 RequestHeader::ACCEPT => MediaType::APPLICATION_JSON,
             ],
-        ]);
-
-        return new ApiClient($client);
+        ];
     }
 
     /**
@@ -85,10 +88,18 @@ class AuthClient extends GenericProvider
     }
 
     /**
-     * Web endpoint to access Linxo as an end-user
+     * Web endpoint to signup on Linxo as an end-user
      */
-    public function getWebEndpoint(): string
+    public function getWebEndpointSignup(): string
     {
-        return $this->webEndpoint;
+        return $this->webEndpoint . '#Information';
+    }
+
+    /**
+     * Web endpoint to log in Linxo as an end-user
+     */
+    public function getWebEndpointLogin(): string
+    {
+        return $this->webEndpoint . '#Login';
     }
 }

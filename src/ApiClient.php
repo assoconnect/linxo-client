@@ -17,7 +17,7 @@ class ApiClient
 {
     private ClientInterface $client;
 
-    private const VERSION = 'v2.1';
+    public const VERSION = 'v2.1';
 
     public function __construct(ClientInterface $client)
     {

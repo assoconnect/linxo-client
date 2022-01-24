@@ -43,6 +43,8 @@ class TransactionDto
     public const TYPE_REPEATING_PAYMENT = 'REPEATING_PAYMENT';
     public const TYPE_OTHER = 'OTHER';
 
+    public const TIMEZONE = 'Europe/Paris';
+
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -52,8 +54,8 @@ class TransactionDto
         $this->notes = $data['notes'] ?? null;
         $this->type = $data['type'];
         $this->date = AbsoluteDate::createInTimezone(
-            // Linxo uses timestamps but their servers' timezone is Europe/Paris
-            new \DateTimeZone('Europe/Paris'),
+        // Linxo uses timestamps but their servers' timezone is Europe/Paris
+            new \DateTimeZone(self::TIMEZONE),
             new \DateTime('@' . $data['date'])
         );
     }
