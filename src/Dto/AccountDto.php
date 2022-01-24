@@ -12,7 +12,7 @@ class AccountDto
     private string $id;
     private string $connectionId;
     private string $name;
-    private string $iban;
+    private ?string $iban;
     private string $status;
     private Currency $currency;
 
@@ -34,7 +34,7 @@ class AccountDto
         $this->id = $data['id'];
         $this->connectionId = $data['connection_id'];
         $this->name = $data['name'];
-        $this->iban = $data['iban'];
+        $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
         $this->currency = new Currency($data['currency']);
     }
@@ -54,7 +54,7 @@ class AccountDto
         return $this->name;
     }
 
-    public function getIban(): string
+    public function getIban(): ?string
     {
         return $this->iban;
     }
