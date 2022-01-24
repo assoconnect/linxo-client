@@ -17,10 +17,10 @@ class MockAuthClient extends AuthClient
 
     private MockMiddleware $mockMiddleware;
 
-    public function __construct(string $clientId, string $clientSecret, string $redirectUri, bool $isProd)
+    public function __construct(string $clientId, string $clientSecret, string $redirectUri)
     {
         $this->mockMiddleware = new MockMiddleware();
-        parent::__construct($clientId, $clientSecret, $redirectUri, $isProd);
+        parent::__construct($clientId, $clientSecret, $redirectUri, false);
     }
 
     public function getMiddleware(): MockMiddleware

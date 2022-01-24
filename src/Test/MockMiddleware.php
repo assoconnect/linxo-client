@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace AssoConnect\LinxoClient\Test;
 
+use AssoConnect\LinxoClient\ApiClient;
 use GuzzleHttp\Promise as P;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\MockObject\Api;
 use Psr\Http\Message\RequestInterface;
 
 class MockMiddleware
@@ -42,62 +44,82 @@ class MockMiddleware
     {
         $path = $request->getUri()->getPath();
 
-        // USERS
-        if (strpos($path, '/users/me') === 0) {
-            if (null === $this->me) {
-                return null;
-            }
-            return $this->buildResponse($this->me);
+        // ACCOUNTS
+        if (strpos($path, '/' . ApiClient::VERSION . '/accounts') === 0) {
+            return $this->respondToAccountsRequest($request);
         }
 
-        // ACCOUNTS
-        if (strpos($path, '/accounts/') === 0) {
-            $accountId = substr($path, 10);
+        // TRANSACTIONS
+        if (strpos($path, '/' . ApiClient::VERSION . '/transactions') === 0) {
+            $this->respondToTransactionsRequest($request);
+        }
+
+        // USERS
+        if (strpos($path, '/' . ApiClient::VERSION . '/users') === 0) {
+            return $this->respondToUsersRequest($request);
+        }
+
+        return null;
+    }
+
+    private function respondToAccountsRequest(RequestInterface $request): ?Response
+    {
+        $path = $request->getUri()->getPath();
+
+        if (preg_match('#/accounts/([0-9]+)$#', $path, $matches)) {
+            $accountId = $matches[1];
             if (array_key_exists($accountId, $this->accounts)) {
                 return $this->buildResponse($this->accounts[$accountId]);
             }
             return null;
         }
-        if (strpos($path, '/accounts') === 0) {
-            return $this->buildResponse($this->accounts);
-        }
 
-        // TRANSACTIONS
-        if (strpos($path, '/transactions/') === 0) {
-            $transactionId = substr($path, 14);
+        return $this->buildResponse($this->accounts);
+    }
+
+    private function respondToTransactionsRequest(RequestInterface $request): ?Response
+    {
+        $path = $request->getUri()->getPath();
+
+        if (preg_match('#/transactions/([0-9]+)$#', $path, $matches)) {
+            $transactionId = $matches[1];
             if (array_key_exists($transactionId, $this->transactions)) {
                 return $this->buildResponse($this->transactions[$transactionId]);
             }
             return null;
         }
 
-        if (strpos($path, '/transactions') === 0) {
-            $transactions = $this->transactions;
+        $filtered = $this->transactions;
 
-            parse_str($request->getUri()->getQuery(), $query);
-            if (array_key_exists('account_id', $query)) {
-                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
-                    return $query['account_id'] === $transaction['account_id'];
-                });
-            }
-            if (array_key_exists('start_date', $query)) {
-                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
-                    return $query['start_date'] <= $transaction['start_date'];
-                });
-            }
-            if (array_key_exists('end_date', $query)) {
-                $transactions = array_filter($transactions, function (array $transaction) use ($query): bool {
-                    return $transaction['end_date'] <= $query['end_date'];
-                });
-            }
-            if (array_key_exists('limit', $query) && array_key_exists('page', $query)) {
-                $transactions = array_slice($transactions, $query['limit'] * ($query['page'] - 1), $query['limit']);
-            }
-
-            return $this->buildResponse($transactions);
+        parse_str($request->getUri()->getQuery(), $query);
+        if (array_key_exists('account_id', $query)) {
+            $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
+                return $query['account_id'] === $transaction['account_id'];
+            });
+        }
+        if (array_key_exists('start_date', $query)) {
+            $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
+                return $query['start_date'] <= $transaction['start_date'];
+            });
+        }
+        if (array_key_exists('end_date', $query)) {
+            $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
+                return $transaction['end_date'] <= $query['end_date'];
+            });
+        }
+        if (array_key_exists('limit', $query) && array_key_exists('page', $query)) {
+            $filtered = array_slice($filtered, $query['limit'] * ($query['page'] - 1), $query['limit']);
         }
 
-        return null;
+        return $this->buildResponse($filtered);
+    }
+
+    private function respondToUsersRequest(RequestInterface $request): ?Response
+    {
+        if (null === $this->me) {
+            return null;
+        }
+        return $this->buildResponse($this->me);
     }
 
     public function stackMe(array $me): void
