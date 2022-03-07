@@ -66,7 +66,7 @@ class MockMiddleware
     {
         $path = $request->getUri()->getPath();
 
-        if (preg_match('#/accounts/([0-9]+)$#', $path, $matches)) {
+        if (preg_match('#/accounts/(\d+)$#', $path, $matches)) {
             $accountId = $matches[1];
             if (array_key_exists($accountId, $this->accounts)) {
                 return $this->buildResponse($this->accounts[$accountId]);
@@ -81,7 +81,7 @@ class MockMiddleware
     {
         $path = $request->getUri()->getPath();
 
-        if (preg_match('#/transactions/([0-9]+)$#', $path, $matches)) {
+        if (preg_match('#/transactions/(\d+)$#', $path, $matches)) {
             $transactionId = $matches[1];
             if (array_key_exists($transactionId, $this->transactions)) {
                 return $this->buildResponse($this->transactions[$transactionId]);
