@@ -42,13 +42,13 @@ class MockAuthClient extends AuthClient
     /**
      * Exchange a code for a token as part of the Authorization Code grant
      */
-    public function getTokenFromCode(string $code): AccessTokenInterface
+    public function getTokenFromCode(string $code, string $redirectUri): AccessTokenInterface
     {
         if (self::CODE === $code) {
             return $this->generateMockToken();
         }
 
-        return parent::getTokenFromCode($code);
+        return parent::getTokenFromCode($code, $redirectUri);
     }
 
     /**

@@ -108,7 +108,7 @@ class MockMiddleware
             });
         }
         if (array_key_exists('limit', $query) && array_key_exists('page', $query)) {
-            $filtered = array_slice($filtered, $query['limit'] * ($query['page'] - 1), $query['limit']);
+            $filtered = array_slice($filtered, $query['limit'] * ($query['page'] - 1), intval($query['limit']));
         }
 
         return $this->buildResponse($filtered);

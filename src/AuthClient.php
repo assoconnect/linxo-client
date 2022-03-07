@@ -74,9 +74,12 @@ class AuthClient extends GenericProvider
     /**
      * Exchange a code for a token as part of the Authorization Code grant
      */
-    public function getTokenFromCode(string $code): AccessTokenInterface
+    public function getTokenFromCode(string $code, string $redirectUri): AccessTokenInterface
     {
-        return $this->getAccessToken('authorization_code', ['code' => $code]);
+        return $this->getAccessToken('authorization_code', [
+            'code' => $code,
+            'redirect_uri' => $redirectUri,
+        ]);
     }
 
     /**

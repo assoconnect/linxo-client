@@ -23,7 +23,7 @@ class MockAuthClientTest extends TestCase
 
     public function testGetTokenFromCodeIsOverridden(): void
     {
-        $token = $this->authClient->getTokenFromCode(MockAuthClient::CODE);
+        $token = $this->authClient->getTokenFromCode(MockAuthClient::CODE, 'redirect uri');
 
         self::assertSame(MockAuthClient::ACCESS_TOKEN, $token->getToken());
         self::assertSame(MockAuthClient::REFRESH_TOKEN, $token->getRefreshToken());
@@ -32,7 +32,7 @@ class MockAuthClientTest extends TestCase
     public function testGetTokenFromCodeIsNotOverriden(): void
     {
         $this->expectException(IdentityProviderException::class);
-        $this->authClient->getTokenFromCode('not mocked code');
+        $this->authClient->getTokenFromCode('not mocked code', 'redirect uri');
     }
 
     public function testRefreshTokenIsOverridden(): void
