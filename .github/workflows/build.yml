@@ -39,8 +39,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectName=[your-repo]
-            -Dsonar.projectKey=assoconnect_[your-repo]
+            -Dsonar.projectName=linxo-client
+            -Dsonar.projectKey=assoconnect_linxo-client
             -Dsonar.organization=assoconnect
             -Dsonar.sources=src
             -Dsonar.tests=tests

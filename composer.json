@@ -35,6 +35,7 @@
     "koriym/http-constants": "^1.2",
     "ext-json": "*",
     "moneyphp/money": "^3.0|^4.0",
-    "assoconnect/php-date": "^2.2"
+    "assoconnect/php-date": "^2.2",
+    "symfony/translation": "^5.4|^6.0"
   }
 }
