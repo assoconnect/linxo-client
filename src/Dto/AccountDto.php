@@ -17,6 +17,7 @@ class AccountDto
     private string $status;
     private Money $balance;
     private Currency $currency;
+    private array $data;
 
     /**
      * Possible account status
@@ -39,7 +40,8 @@ class AccountDto
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
         $this->currency = new Currency($data['currency']);
-        $this->balance = new Money($data['balance'] * 100, $this->currency);
+        $this->balance = new Money(intval(round($data['balance'] * 100)), $this->currency);
+        $this->data = $data;
     }
 
     public function getId(): string
@@ -80,5 +82,11 @@ class AccountDto
     public function getCurrency(): Currency
     {
         return $this->currency;
+    }
+
+    /** @codeCoverageIgnore */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

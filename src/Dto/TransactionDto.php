@@ -18,6 +18,7 @@ class TransactionDto
     private ?string $notes;
     private string $type;
     private AbsoluteDate $date;
+    private array $data;
 
     /**
      * Possible transaction types
@@ -49,7 +50,7 @@ class TransactionDto
     {
         $this->id = $data['id'];
         $this->accountId = $data['account_id'];
-        $this->amount = new Money(intval($data['amount'] * 100), new Currency($data['currency']));
+        $this->amount = new Money(intval(round($data['amount'] * 100)), new Currency($data['currency']));
         $this->label = $data['label'] ?? null;
         $this->notes = $data['notes'] ?? null;
         $this->type = $data['type'];
@@ -58,6 +59,7 @@ class TransactionDto
             new \DateTimeZone(self::TIMEZONE),
             new \DateTime('@' . $data['date'])
         );
+        $this->data = $data;
     }
 
     public function getId(): string
@@ -93,5 +95,11 @@ class TransactionDto
     public function getDate(): AbsoluteDate
     {
         return $this->date;
+    }
+
+    /** @codeCoverageIgnore */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }
