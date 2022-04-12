@@ -11,6 +11,7 @@ class UserDto
     private ?string $firstname;
     private ?string $lastname;
     private \DateTimeImmutable $createdAt;
+    private array $data;
 
     public function __construct(array $data)
     {
@@ -19,6 +20,7 @@ class UserDto
         $this->firstname = $data['first_name'] ?? null;
         $this->lastname = $data['last_name'] ?? null;
         $this->createdAt = new \DateTimeImmutable('@' . $data['creation_date']);
+        $this->data = $data;
     }
 
     public function getId(): string
@@ -44,5 +46,11 @@ class UserDto
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /** @codeCoverageIgnore */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

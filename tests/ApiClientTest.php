@@ -131,7 +131,7 @@ class ApiClientTest extends TestCase
 
         self::assertSame('2433482741', $transactions[0]->getId());
         self::assertSame('63723418', $transactions[0]->getAccountId());
-        self::assertEquals(Money::EUR(-28800), $transactions[0]->getAmount());
+        self::assertEquals(Money::EUR(-7999), $transactions[0]->getAmount());
         self::assertEquals(new AbsoluteDate('2021-12-20'), $transactions[0]->getDate());
         self::assertSame('France Télécom', $transactions[0]->getLabel());
         self::assertSame(

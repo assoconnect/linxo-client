@@ -10,6 +10,7 @@ class ConnectionDto
     private string $name;
     private string $status;
     private string $logoUrl;
+    private array $data;
 
     public const STATUS_RUNNING = 'RUNNING';
     public const STATUS_SUCCESS = 'SUCCESS';
@@ -24,6 +25,7 @@ class ConnectionDto
         $this->name = $data['name'];
         $this->status = $data['status'];
         $this->logoUrl = $data['logo_url'];
+        $this->data = $data;
     }
 
     public function getId(): string
@@ -44,5 +46,11 @@ class ConnectionDto
     public function getLogoUrl(): string
     {
         return $this->logoUrl;
+    }
+
+    /** @codeCoverageIgnore */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }
