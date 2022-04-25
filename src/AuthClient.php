@@ -60,6 +60,9 @@ class AuthClient extends GenericProvider
         return new ApiClient(new Client($this->getGuzzleOptions($token)));
     }
 
+    /**
+     * @return mixed[]
+     */
     protected function getGuzzleOptions(string $token): array
     {
         return [

@@ -17,6 +17,7 @@ class AccountDto
     private string $status;
     private Money $balance;
     private Currency $currency;
+    /** @var mixed[] */
     private array $data;
 
     /**
@@ -32,6 +33,9 @@ class AccountDto
     public const STATUS_SUSPENDED = 'SUSPENDED';
     public const STATUS_PENDING_CONSENT = 'PENDING_CONSENT';
 
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -84,7 +88,10 @@ class AccountDto
         return $this->currency;
     }
 
-    /** @codeCoverageIgnore */
+    /**
+     * @codeCoverageIgnore
+     * @return mixed[]
+     */
     public function getData(): array
     {
         return $this->data;

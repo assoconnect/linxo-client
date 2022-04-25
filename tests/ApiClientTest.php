@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class ApiClientTest extends TestCase
 {
+    /** @param Response[] $queue */
     private function mockApiCalls(array $queue): ApiClient
     {
         $mock = new MockHandler($queue);

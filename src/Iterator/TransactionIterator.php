@@ -12,6 +12,7 @@ use AssoConnect\PHPDate\AbsoluteDate;
  * Iterator to loop through all available transactions
  *
  * It browses through the API pagination system
+ * @implements \Iterator<int, TransactionDto>
  */
 class TransactionIterator implements \Iterator
 {
@@ -20,7 +21,7 @@ class TransactionIterator implements \Iterator
     private ?AbsoluteDate $startDate;
     private ?AbsoluteDate $endDate;
 
-    /** @var TransactionDto[] */
+    /** @var TransactionDto[]|null */
     private ?array $transactions;
     private int $currentCursor;
     private int $currentPage;

@@ -18,6 +18,7 @@ class TransactionDto
     private ?string $notes;
     private string $type;
     private AbsoluteDate $date;
+    /** @var mixed[] */
     private array $data;
 
     /**
@@ -46,6 +47,9 @@ class TransactionDto
 
     public const TIMEZONE = 'Europe/Paris';
 
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -97,7 +101,10 @@ class TransactionDto
         return $this->date;
     }
 
-    /** @codeCoverageIgnore */
+    /**
+     * @codeCoverageIgnore
+     * @return mixed[]
+     */
     public function getData(): array
     {
         return $this->data;
