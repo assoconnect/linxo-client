@@ -24,6 +24,11 @@ class ApiClient
         $this->client = $client;
     }
 
+    /**
+     * @param string $uri
+     * @param mixed[] $query
+     * @return mixed[]
+     */
     private function request(string $uri, array $query = []): array
     {
         $response = $this->client->request(Method::GET, '/' . self::VERSION . $uri, ['query' => $query]);
@@ -84,7 +89,7 @@ class ApiClient
         AbsoluteDate $startDate = null,
         AbsoluteDate $endDate = null,
         int $limit = 100
-    ): iterable {
+    ): array {
         $query = [
             'account_id' => $accountId,
             'page' => $page,

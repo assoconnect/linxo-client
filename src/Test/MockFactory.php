@@ -20,6 +20,10 @@ class MockFactory
         $this->middleware = $middleware;
     }
 
+    /**
+     * @param mixed[] $body
+     * @return mixed[]
+     */
     public function mockMe(array $body = []): array
     {
         $body = array_merge([
@@ -34,6 +38,10 @@ class MockFactory
         return $body;
     }
 
+    /**
+     * @param mixed[] $body
+     * @return mixed[]
+     */
     public function mockAccount(array $body = []): array
     {
         $body = array_merge([
@@ -50,6 +58,10 @@ class MockFactory
         return $body;
     }
 
+    /**
+     * @param mixed[] $body
+     * @return mixed[]
+     */
     public function mockTransaction(array $body = []): array
     {
         $body = array_merge([

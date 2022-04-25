@@ -11,8 +11,12 @@ class UserDto
     private ?string $firstname;
     private ?string $lastname;
     private \DateTimeImmutable $createdAt;
+    /** @var mixed[] */
     private array $data;
 
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -48,7 +52,10 @@ class UserDto
         return $this->createdAt;
     }
 
-    /** @codeCoverageIgnore */
+    /**
+     * @codeCoverageIgnore
+     * @return mixed[]
+     */
     public function getData(): array
     {
         return $this->data;

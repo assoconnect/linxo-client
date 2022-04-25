@@ -12,8 +12,13 @@ use Psr\Http\Message\RequestInterface;
 
 class MockMiddleware
 {
+    /** @var mixed[]|null  */
     private ?array $me = null;
+
+    /** @var mixed[] */
     private array $accounts = [];
+
+    /** @var mixed[] */
     private array $transactions = [];
 
     public function __invoke(callable $handler): callable
@@ -35,6 +40,7 @@ class MockMiddleware
         };
     }
 
+    /** @param mixed[] $body */
     private function buildResponse(array $body): Response
     {
         return new Response(200, ['content-type' => 'json'], json_encode($body));
@@ -66,7 +72,7 @@ class MockMiddleware
     {
         $path = $request->getUri()->getPath();
 
-        if (preg_match('#/accounts/(\d+)$#', $path, $matches)) {
+        if (preg_match('#/accounts/(\d+)$#', $path, $matches) === 1) {
             $accountId = $matches[1];
             if (array_key_exists($accountId, $this->accounts)) {
                 return $this->buildResponse($this->accounts[$accountId]);
@@ -81,7 +87,7 @@ class MockMiddleware
     {
         $path = $request->getUri()->getPath();
 
-        if (preg_match('#/transactions/(\d+)$#', $path, $matches)) {
+        if (preg_match('#/transactions/(\d+)$#', $path, $matches) === 1) {
             $transactionId = $matches[1];
             if (array_key_exists($transactionId, $this->transactions)) {
                 return $this->buildResponse($this->transactions[$transactionId]);
@@ -122,16 +128,19 @@ class MockMiddleware
         return $this->buildResponse($this->me);
     }
 
+    /** @param mixed[] $me */
     public function stackMe(array $me): void
     {
         $this->me = $me;
     }
 
+    /** @param mixed[] $account */
     public function stackAccount(array $account): void
     {
         $this->accounts[$account['id']] = $account;
     }
 
+    /** @param mixed[] $transaction */
     public function stackTransaction(array $transaction): void
     {
         $this->transactions[$transaction['id']] = $transaction;

@@ -10,6 +10,7 @@ class ConnectionDto
     private string $name;
     private string $status;
     private string $logoUrl;
+    /** @var mixed[] */
     private array $data;
 
     public const STATUS_RUNNING = 'RUNNING';
@@ -19,6 +20,9 @@ class ConnectionDto
     public const STATUS_CLOSED = 'CLOSED';
     public const STATUS_NONE = 'NONE';
 
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -48,7 +52,10 @@ class ConnectionDto
         return $this->logoUrl;
     }
 
-    /** @codeCoverageIgnore */
+    /**
+     * @codeCoverageIgnore
+     * @return mixed[]
+     */
     public function getData(): array
     {
         return $this->data;
