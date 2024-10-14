@@ -40,7 +40,7 @@ class AccountDto
     {
         $this->id = $data['id'];
         $this->connectionId = $data['connection_id'];
-        $this->name = $data['name'];
+        $this->name = $data['name'] ?? $data['account_number'];
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
         $this->currency = new Currency($data['currency']);

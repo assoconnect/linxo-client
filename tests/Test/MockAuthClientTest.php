@@ -17,7 +17,7 @@ class MockAuthClientTest extends TestCase
         $this->authClient = new MockAuthClient(
             'client id',
             'client secret',
-            'http://linxo.com'
+            'https://linxo.com'
         );
     }
 
