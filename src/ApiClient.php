@@ -50,7 +50,7 @@ class ApiClient
      */
     public function getConnections(): iterable
     {
-        return array_map(function ($connection): ConnectionDto {
+        return array_map(static function (array $connection): ConnectionDto {
             return new ConnectionDto($connection);
         }, $this->request('/connections'));
     }
@@ -66,7 +66,7 @@ class ApiClient
      */
     public function getAccounts(): iterable
     {
-        return array_map(function ($account): AccountDto {
+        return array_map(static function (array $account): AccountDto {
             return new AccountDto($account);
         }, $this->request('/accounts'));
     }
@@ -105,7 +105,7 @@ class ApiClient
         }
 
         $transactions = $this->request('/transactions', $query);
-        return array_map(function ($transaction): TransactionDto {
+        return array_map(static function (array $transaction): TransactionDto {
             return new TransactionDto($transaction);
         }, $transactions);
     }

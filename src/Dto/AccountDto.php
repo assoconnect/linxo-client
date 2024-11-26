@@ -8,6 +8,18 @@ use Money\Currency;
 use Money\Money;
 use Symfony\Component\Translation\TranslatableMessage;
 
+/**
+ * @phpstan-type Account array{
+ *     id: string,
+ *     connection_id: string,
+ *     name?: string,
+ *     account_number?: string,
+ *     iban?: string,
+ *     status: string,
+ *     currency: string,
+ *     balance: string
+ * }
+ */
 class AccountDto
 {
     private string $id;
@@ -34,7 +46,7 @@ class AccountDto
     public const STATUS_PENDING_CONSENT = 'PENDING_CONSENT';
 
     /**
-     * @param mixed[] $data
+     * @param Account $data
      */
     public function __construct(array $data)
     {
@@ -44,7 +56,7 @@ class AccountDto
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
         $this->currency = new Currency($data['currency']);
-        $this->balance = new Money(intval(round($data['balance'] * 100)), $this->currency);
+        $this->balance = new Money(intval(round((float) $data['balance'] * 100)), $this->currency);
         $this->data = $data;
     }
 
@@ -90,7 +102,7 @@ class AccountDto
 
     /**
      * @codeCoverageIgnore
-     * @return mixed[]
+     * @return Account
      */
     public function getData(): array
     {

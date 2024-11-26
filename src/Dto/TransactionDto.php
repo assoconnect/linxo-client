@@ -7,8 +7,19 @@ namespace AssoConnect\LinxoClient\Dto;
 use AssoConnect\PHPDate\AbsoluteDate;
 use Money\Currency;
 use Money\Money;
-use Symfony\Component\Translation\TranslatableMessage;
 
+/**
+ * @phpstan-type Transaction array{
+ *     id: string,
+ *     account_id: string,
+ *     amount: string,
+ *     currency: string,
+ *     label?: string,
+ *     notes?: string,
+ *     type: string,
+ *     date: string
+ * }
+ */
 class TransactionDto
 {
     private string $id;
@@ -48,20 +59,20 @@ class TransactionDto
     public const TIMEZONE = 'Europe/Paris';
 
     /**
-     * @param mixed[] $data
+     * @param Transaction $data
      */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->accountId = $data['account_id'];
-        $this->amount = new Money(intval(round($data['amount'] * 100)), new Currency($data['currency']));
+        $this->amount = new Money(intval(round((float) $data['amount'] * 100)), new Currency($data['currency']));
         $this->label = $data['label'] ?? null;
         $this->notes = $data['notes'] ?? null;
         $this->type = $data['type'];
         $this->date = AbsoluteDate::createInTimezone(
         // Linxo uses timestamps but their servers' timezone is Europe/Paris
             new \DateTimeZone(self::TIMEZONE),
-            new \DateTime('@' . $data['date'])
+            new \DateTimeImmutable('@' . $data['date'])
         );
         $this->data = $data;
     }
@@ -103,7 +114,7 @@ class TransactionDto
 
     /**
      * @codeCoverageIgnore
-     * @return mixed[]
+     * @return Transaction
      */
     public function getData(): array
     {
