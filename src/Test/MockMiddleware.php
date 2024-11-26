@@ -5,11 +5,23 @@ declare(strict_types=1);
 namespace AssoConnect\LinxoClient\Test;
 
 use AssoConnect\LinxoClient\ApiClient;
+use AssoConnect\LinxoClient\Dto\AccountDto;
+use AssoConnect\LinxoClient\Dto\TransactionDto;
 use GuzzleHttp\Promise as P;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\MockObject\Api;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @phpstan-type TransactionQuery array{
+ *     account_id?:string,
+ *     start_date?: string,
+ *     end_date?: string,
+ *     limit?: string,
+ *     page?: string
+ * }
+ * @phpstan-import-type Transaction from TransactionDto
+ * @phpstan-import-type Account from AccountDto
+ */
 class MockMiddleware
 {
     /** @var mixed[]|null  */
@@ -18,15 +30,19 @@ class MockMiddleware
     /** @var mixed[] */
     private array $accounts = [];
 
-    /** @var mixed[] */
+    /** @var Transaction[] */
     private array $transactions = [];
 
-    public function __invoke(callable $handler): callable
+    /**
+     * @param callable(RequestInterface, array<mixed>): mixed $handler
+     * @return mixed
+     */
+    public function __invoke(callable $handler): mixed
     {
         return function (
             RequestInterface $request,
             array $options
-        ) use ($handler) {
+        ) use ($handler): mixed {
             $response = $this->findTheRightResponse($request);
 
             if (null !== $response) {
@@ -98,6 +114,9 @@ class MockMiddleware
         $filtered = $this->transactions;
 
         parse_str($request->getUri()->getQuery(), $query);
+
+        /** @var TransactionQuery $query */
+
         if (array_key_exists('account_id', $query)) {
             $filtered = array_filter($filtered, function (array $transaction) use ($query): bool {
                 return $query['account_id'] === $transaction['account_id'];
@@ -138,13 +157,13 @@ class MockMiddleware
         $this->me = $me;
     }
 
-    /** @param mixed[] $account */
+    /** @param Account $account */
     public function stackAccount(array $account): void
     {
         $this->accounts[$account['id']] = $account;
     }
 
-    /** @param mixed[] $transaction */
+    /** @param Transaction $transaction */
     public function stackTransaction(array $transaction): void
     {
         $this->transactions[$transaction['id']] = $transaction;
