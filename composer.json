@@ -24,7 +24,7 @@
   "require": {
     "php": "^7.4|^8.2|^8.3",
     "league/oauth2-client": "^2.6",
-    "guzzlehttp/guzzle": "^6.0|^7.4",
+    "guzzlehttp/guzzle": "^7.4",
     "koriym/http-constants": "^1.2",
     "ext-json": "*",
     "moneyphp/money": "^3.0|^4.0",
