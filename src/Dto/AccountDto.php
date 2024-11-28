@@ -17,7 +17,8 @@ use Symfony\Component\Translation\TranslatableMessage;
  *     iban?: string,
  *     status: string,
  *     currency: string,
- *     balance: string
+ *     balance: string,
+ *     type?: string
  * }
  */
 class AccountDto
