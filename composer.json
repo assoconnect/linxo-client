@@ -28,7 +28,7 @@
     "koriym/http-constants": "^1.2",
     "ext-json": "*",
     "moneyphp/money": "^3.3|^4.0",
-    "assoconnect/php-date": "^2.2",
+    "assoconnect/php-date": "dev-tristan-update-dependency",
     "symfony/translation": "^5.4|^6.0|^7.0"
   },
   "require-dev": {
