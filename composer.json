@@ -32,7 +32,8 @@
     "symfony/translation": "^5.4|^6.0|^7.0"
   },
   "require-dev": {
-    "assoconnect/php-quality-config": "^1.14"
+    "assoconnect/php-quality-config": "^1.14",
+    "rector/rector": "^1.2"
   },
   "config": {
     "allow-plugins": {
