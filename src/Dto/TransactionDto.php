@@ -65,14 +65,14 @@ class TransactionDto
     {
         $this->id = $data['id'];
         $this->accountId = $data['account_id'];
-        $this->amount = new Money(intval(round((float) $data['amount'] * 100)), new Currency($data['currency']));
-        $this->label = $data['label'] ?? null;
+        $this->amount = new Money(intval(round((float) $data['amount']['amount'] * 100)), new Currency($data['amount']['currency']));
+        $this->label = $data['enrichments']['display_label'] ?? null;
         $this->notes = $data['notes'] ?? null;
-        $this->type = $data['type'];
+        $this->type = $data['type'] ?? self::TYPE_OTHER;
         $this->date = AbsoluteDate::createInTimezone(
         // Linxo uses timestamps but their servers' timezone is Europe/Paris
             new \DateTimeZone(self::TIMEZONE),
-            new \DateTimeImmutable('@' . $data['date'])
+            new \DateTimeImmutable($data['enrichments']['date'])
         );
         $this->data = $data;
     }

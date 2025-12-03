@@ -1,3 +1,5 @@
+# /!\ TODO: This README is outdated
+
 # PHP Client for the Linxo API
 
 [![Build Status](https://github.com/assoconnect/linxo-client/actions/workflows/build.yml/badge.svg)](https://github.com/assoconnect/linxo-client/actions/workflows/build.yml)

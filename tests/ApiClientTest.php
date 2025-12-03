@@ -17,13 +17,15 @@ use PHPUnit\Framework\TestCase;
 
 class ApiClientTest extends TestCase
 {
+    private const USER_ID = '3996384';
+
     /** @param Response[] $queue */
     private function mockApiCalls(array $queue): ApiClient
     {
         $mock = new MockHandler($queue);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
-        return new ApiClient($client);
+        return new ApiClient($client, self::USER_ID);
     }
 
     public function testGetCurrentUserCorrectlyParseTheApiResponse(): void
@@ -33,7 +35,7 @@ class ApiClientTest extends TestCase
         ]);
         $user = $client->getCurrentUser();
 
-        self::assertSame('3996384', $user->getId());
+        self::assertSame(self::USER_ID, $user->getId());
         self::assertSame('DOE', $user->getLastname());
         self::assertSame('John', $user->getFirstname());
         self::assertSame('john.doe@gmail.com', $user->getEmail());

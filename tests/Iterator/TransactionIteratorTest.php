@@ -25,7 +25,7 @@ class TransactionIteratorTest extends TestCase
         ]);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
-        $apiClient = new ApiClient($client);
+        $apiClient = new ApiClient($client, 'some user id');
 
         $iterator = $apiClient->getTransactionsIterator('some id');
 

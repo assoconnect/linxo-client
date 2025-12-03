@@ -23,8 +23,7 @@ class MockMiddlewareTest extends TestCase
             'client secret',
             'https://linxo.com'
         );
-
-        $this->apiClient = $authClient->createApiClient(MockAuthClient::ACCESS_TOKEN);
+        $this->apiClient = $authClient->createApiClient(MockAuthClient::ACCESS_TOKEN, 'client id');
         $middleware = $authClient->getMiddleware();
         $this->factory = new MockFactory($middleware);
     }

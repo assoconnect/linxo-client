@@ -56,8 +56,8 @@ class AccountDto
         $this->name = $data['name'] ?? $data['account_number'];
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
-        $this->currency = new Currency($data['currency']);
-        $this->balance = new Money(intval(round((float) $data['balance'] * 100)), $this->currency);
+        $this->currency = new Currency($data['balance']['amount']['currency']);
+        $this->balance = new Money(intval(round((float) $data['balance']['amount']['amount'] * 100)), $this->currency);
         $this->data = $data;
     }
 
