@@ -53,14 +53,6 @@ class AuthClient extends GenericProvider
     }
 
     /**
-     * Create a Guzzle-powered API Client from a valid access token
-     */
-    public function createApiClient(string $token): ApiClient
-    {
-        return new ApiClient(new Client($this->getGuzzleOptions($token)));
-    }
-
-    /**
      * @return mixed[]
      */
     protected function getGuzzleOptions(string $token): array

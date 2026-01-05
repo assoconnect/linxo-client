@@ -12,16 +12,20 @@ use AssoConnect\LinxoClient\Iterator\TransactionIterator;
 use AssoConnect\PHPDate\AbsoluteDate;
 use GuzzleHttp\ClientInterface;
 use Koriym\HttpConstants\Method;
+use phpseclib3\Crypt\Random;
+use Symfony\Component\Uid\Uuid;
 
 class ApiClient
 {
     private ClientInterface $client;
 
-    public const VERSION = 'v2.1';
+    public const VERSION = 'v3';
+    private string $userId;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, string $userId)
     {
         $this->client = $client;
+        $this->userId = $userId;
     }
 
     /**
@@ -52,7 +56,7 @@ class ApiClient
     {
         return array_map(static function (array $connection): ConnectionDto {
             return new ConnectionDto($connection);
-        }, $this->request('/connections'));
+        }, $this->request('/connections', ['user_id' => $this->userId])['connections']);
     }
 
     public function getConnection(string $connectionId): ConnectionDto
@@ -68,7 +72,7 @@ class ApiClient
     {
         return array_map(static function (array $account): AccountDto {
             return new AccountDto($account);
-        }, $this->request('/accounts'));
+        }, $this->request('/accounts', ['user_id' => $this->userId])['accounts']);
     }
 
     /**
@@ -91,23 +95,24 @@ class ApiClient
         int $limit = 100
     ): array {
         $query = [
-            'account_id' => $accountId,
+            'user_id' => $this->userId,
+            'account_ids' => [$accountId],
             'page' => $page,
             'limit' => $limit
         ];
 
         if (null !== $startDate) {
-            $query['start_date'] = $startDate->startsAt(new \DateTimeZone('Europe/Paris'))->getTimestamp();
+            $query['start_date'] = $startDate->startsAt(new \DateTimeZone('Europe/Paris'))->format(\DateTime::ATOM);
         }
 
         if (null !== $endDate) {
-            $query['end_date'] = $endDate->startsAt(new \DateTimeZone('Europe/Paris'))->getTimestamp();
+            $query['end_date'] = $endDate->startsAt(new \DateTimeZone('Europe/Paris'))->format(\DateTime::ATOM);
         }
 
-        $transactions = $this->request('/transactions', $query);
+        $response = $this->request('/transactions', $query);
         return array_map(static function (array $transaction): TransactionDto {
             return new TransactionDto($transaction);
-        }, $transactions);
+        }, $response['transactions']);
     }
 
     /**

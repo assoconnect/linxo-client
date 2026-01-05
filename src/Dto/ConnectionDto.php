@@ -28,7 +28,7 @@ class ConnectionDto
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->status = $data['status'];
-        $this->logoUrl = $data['logo_url'];
+        $this->logoUrl = $data['provider_logo_url'];
         $this->data = $data;
     }
 
