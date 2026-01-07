@@ -90,8 +90,8 @@ class ApiClient
     public function getTransactions(
         string $accountId,
         int $page = 1,
-        AbsoluteDate $startDate = null,
-        AbsoluteDate $endDate = null,
+        ?AbsoluteDate $startDate = null,
+        ?AbsoluteDate $endDate = null,
         int $limit = 100
     ): array {
         $query = [
@@ -120,8 +120,8 @@ class ApiClient
      */
     public function getTransactionsIterator(
         string $accountId,
-        AbsoluteDate $startDate = null,
-        AbsoluteDate $endDate = null
+        ?AbsoluteDate $startDate = null,
+        ?AbsoluteDate $endDate = null
     ): TransactionIterator {
         return new TransactionIterator($this, $accountId, $startDate, $endDate);
     }
