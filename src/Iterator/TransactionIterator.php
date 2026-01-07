@@ -31,8 +31,8 @@ class TransactionIterator implements \Iterator
     public function __construct(
         ApiClient $apiClient,
         string $accountId,
-        AbsoluteDate $startDate = null,
-        AbsoluteDate $endDate = null
+        ?AbsoluteDate $startDate = null,
+        ?AbsoluteDate $endDate = null
     ) {
         $this->apiClient = $apiClient;
         $this->accountId = $accountId;
