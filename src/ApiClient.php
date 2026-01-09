@@ -96,7 +96,7 @@ class ApiClient
     ): array {
         $query = [
             'user_id' => $this->userId,
-            'account_ids' => [$accountId],
+            'account_ids' => $accountId,
             'page' => $page,
             'limit' => $limit
         ];
