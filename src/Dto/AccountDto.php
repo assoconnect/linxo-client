@@ -29,7 +29,7 @@ class AccountDto
     private string $status;
     private Money $balance;
     private Currency $currency;
-    /** @var mixed[] */
+    /** @var Account */
     private array $data;
 
     /**
@@ -52,10 +52,12 @@ class AccountDto
     {
         $this->id = $data['id'];
         $this->connectionId = $data['connection_id'];
-        $this->name = $data['name'] ?? $data['account_number'];
+        $this->name = $data['name'] ?? $data['account_number'] ?? '';
         $this->iban = $data['iban'] ?? null;
         $this->status = $data['status'];
-        $this->currency = new Currency($data['balance']['amount']['currency']);
+        /** @var non-empty-string $currencyCode */
+        $currencyCode = $data['balance']['amount']['currency'];
+        $this->currency = new Currency($currencyCode);
         $this->balance = new Money(intval(round((float) $data['balance']['amount']['amount'] * 100)), $this->currency);
         $this->data = $data;
     }
