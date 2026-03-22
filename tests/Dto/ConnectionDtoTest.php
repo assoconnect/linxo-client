@@ -20,10 +20,10 @@ class ConnectionDtoTest extends TestCase
 
         $dto = new ConnectionDto($data);
 
-        $this->assertSame('conn-123', $dto->getId());
-        $this->assertSame('BNP Paribas', $dto->getName());
-        $this->assertSame(ConnectionDto::STATUS_SUCCESS, $dto->getStatus());
-        $this->assertSame('https://example.com/bnp-logo.png', $dto->getLogoUrl());
+        self::assertSame('conn-123', $dto->getId());
+        self::assertSame('BNP Paribas', $dto->getName());
+        self::assertSame(ConnectionDto::STATUS_SUCCESS, $dto->getStatus());
+        self::assertSame('https://example.com/bnp-logo.png', $dto->getLogoUrl());
     }
 
     /**
@@ -35,7 +35,7 @@ class ConnectionDtoTest extends TestCase
 
         $dto = new ConnectionDto($data);
 
-        $this->assertSame($status, $dto->getStatus());
+        self::assertSame($status, $dto->getStatus());
     }
 
     /**
@@ -65,7 +65,7 @@ class ConnectionDtoTest extends TestCase
 
             $dto = new ConnectionDto($data);
 
-            $this->assertSame($bankName, $dto->getName());
+            self::assertSame($bankName, $dto->getName());
         }
     }
 
@@ -82,7 +82,7 @@ class ConnectionDtoTest extends TestCase
 
             $dto = new ConnectionDto($data);
 
-            $this->assertSame($logoUrl, $dto->getLogoUrl());
+            self::assertSame($logoUrl, $dto->getLogoUrl());
         }
     }
 

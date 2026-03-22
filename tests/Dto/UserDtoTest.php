@@ -22,12 +22,12 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertSame('user-123', $dto->getId());
-        $this->assertSame('john.doe@example.com', $dto->getEmail());
-        $this->assertSame('John', $dto->getFirstname());
-        $this->assertSame('Doe', $dto->getLastname());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $dto->getCreatedAt());
-        $this->assertSame($creationTimestamp, $dto->getCreatedAt()->getTimestamp());
+        self::assertSame('user-123', $dto->getId());
+        self::assertSame('john.doe@example.com', $dto->getEmail());
+        self::assertSame('John', $dto->getFirstname());
+        self::assertSame('Doe', $dto->getLastname());
+        self::assertInstanceOf(\DateTimeImmutable::class, $dto->getCreatedAt());
+        self::assertSame($creationTimestamp, $dto->getCreatedAt()->getTimestamp());
     }
 
     public function testFirstnameIsNullWhenNotProvided(): void
@@ -37,7 +37,7 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertNull($dto->getFirstname());
+        self::assertNull($dto->getFirstname());
     }
 
     public function testLastnameIsNullWhenNotProvided(): void
@@ -47,7 +47,7 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertNull($dto->getLastname());
+        self::assertNull($dto->getLastname());
     }
 
     public function testBothNamesNullWhenNotProvided(): void
@@ -57,8 +57,8 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertNull($dto->getFirstname());
-        $this->assertNull($dto->getLastname());
+        self::assertNull($dto->getFirstname());
+        self::assertNull($dto->getLastname());
     }
 
     public function testCreatedAtParsedFromUnixTimestamp(): void
@@ -68,8 +68,8 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertSame('2021-01-01', $dto->getCreatedAt()->format('Y-m-d'));
-        $this->assertSame($timestamp, $dto->getCreatedAt()->getTimestamp());
+        self::assertSame('2021-01-01', $dto->getCreatedAt()->format('Y-m-d'));
+        self::assertSame($timestamp, $dto->getCreatedAt()->getTimestamp());
     }
 
     public function testCreatedAtWithRecentTimestamp(): void
@@ -79,7 +79,7 @@ class UserDtoTest extends TestCase
 
         $dto = new UserDto($data);
 
-        $this->assertSame('2024-01-01', $dto->getCreatedAt()->format('Y-m-d'));
+        self::assertSame('2024-01-01', $dto->getCreatedAt()->format('Y-m-d'));
     }
 
     public function testEmailWithVariousFormats(): void
@@ -96,7 +96,7 @@ class UserDtoTest extends TestCase
 
             $dto = new UserDto($data);
 
-            $this->assertSame($email, $dto->getEmail());
+            self::assertSame($email, $dto->getEmail());
         }
     }
 

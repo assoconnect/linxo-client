@@ -30,11 +30,11 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('acc-123', $dto->getId());
-        $this->assertSame('conn-456', $dto->getConnectionId());
-        $this->assertSame('My Checking Account', $dto->getName());
-        $this->assertSame('FR7630001007941234567890185', $dto->getIban());
-        $this->assertSame(AccountDto::STATUS_ACTIVE, $dto->getStatus());
+        self::assertSame('acc-123', $dto->getId());
+        self::assertSame('conn-456', $dto->getConnectionId());
+        self::assertSame('My Checking Account', $dto->getName());
+        self::assertSame('FR7630001007941234567890185', $dto->getIban());
+        self::assertSame(AccountDto::STATUS_ACTIVE, $dto->getStatus());
     }
 
     public function testBalanceConvertedToMoneyInCents(): void
@@ -48,10 +48,10 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertInstanceOf(Money::class, $dto->getBalance());
-        $this->assertSame('123456', $dto->getBalance()->getAmount());
-        $this->assertInstanceOf(Currency::class, $dto->getCurrency());
-        $this->assertSame('EUR', $dto->getCurrency()->getCode());
+        self::assertInstanceOf(Money::class, $dto->getBalance());
+        self::assertSame('123456', $dto->getBalance()->getAmount());
+        self::assertInstanceOf(Currency::class, $dto->getCurrency());
+        self::assertSame('EUR', $dto->getCurrency()->getCode());
     }
 
     public function testBalanceWithZeroAmount(): void
@@ -65,7 +65,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('0', $dto->getBalance()->getAmount());
+        self::assertSame('0', $dto->getBalance()->getAmount());
     }
 
     public function testBalanceWithNegativeAmount(): void
@@ -79,7 +79,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('-50025', $dto->getBalance()->getAmount());
+        self::assertSame('-50025', $dto->getBalance()->getAmount());
     }
 
     public function testBalanceRoundingWithMoreThanTwoDecimals(): void
@@ -93,7 +93,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('10100', $dto->getBalance()->getAmount());
+        self::assertSame('10100', $dto->getBalance()->getAmount());
     }
 
     public function testNameFallsBackToAccountNumber(): void
@@ -106,7 +106,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('FR76123456789', $dto->getName());
+        self::assertSame('FR76123456789', $dto->getName());
     }
 
     public function testNameUsedWhenProvided(): void
@@ -118,7 +118,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame('Primary Account', $dto->getName());
+        self::assertSame('Primary Account', $dto->getName());
     }
 
     public function testIbanIsNullWhenNotProvided(): void
@@ -128,7 +128,7 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertNull($dto->getIban());
+        self::assertNull($dto->getIban());
     }
 
     public function testDifferentCurrencies(): void
@@ -145,7 +145,7 @@ class AccountDtoTest extends TestCase
 
             $dto = new AccountDto($data);
 
-            $this->assertSame($currencyCode, $dto->getCurrency()->getCode());
+            self::assertSame($currencyCode, $dto->getCurrency()->getCode());
         }
     }
 
@@ -156,9 +156,9 @@ class AccountDtoTest extends TestCase
         $dto = new AccountDto($data);
         $message = $dto->getLocalizedStatus();
 
-        $this->assertInstanceOf(TranslatableMessage::class, $message);
-        $this->assertSame('account_status.ACTIVE', $message->getMessage());
-        $this->assertSame('linxo', $message->getDomain());
+        self::assertInstanceOf(TranslatableMessage::class, $message);
+        self::assertSame('account_status.ACTIVE', $message->getMessage());
+        self::assertSame('linxo', $message->getDomain());
     }
 
     /**
@@ -170,8 +170,8 @@ class AccountDtoTest extends TestCase
 
         $dto = new AccountDto($data);
 
-        $this->assertSame($status, $dto->getStatus());
-        $this->assertSame('account_status.' . $status, $dto->getLocalizedStatus()->getMessage());
+        self::assertSame($status, $dto->getStatus());
+        self::assertSame('account_status.' . $status, $dto->getLocalizedStatus()->getMessage());
     }
 
     /**
