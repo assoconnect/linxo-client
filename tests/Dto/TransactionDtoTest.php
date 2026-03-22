@@ -31,11 +31,11 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame('txn-123', $dto->getId());
-        $this->assertSame('acc-456', $dto->getAccountId());
-        $this->assertSame('Grocery Store Purchase', $dto->getLabel());
-        $this->assertSame('Weekly groceries', $dto->getNotes());
-        $this->assertSame(TransactionDto::TYPE_POINT_OF_SALE, $dto->getType());
+        self::assertSame('txn-123', $dto->getId());
+        self::assertSame('acc-456', $dto->getAccountId());
+        self::assertSame('Grocery Store Purchase', $dto->getLabel());
+        self::assertSame('Weekly groceries', $dto->getNotes());
+        self::assertSame(TransactionDto::TYPE_POINT_OF_SALE, $dto->getType());
     }
 
     public function testAmountConvertedToMoneyInCents(): void
@@ -47,10 +47,10 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertInstanceOf(Money::class, $dto->getAmount());
-        $this->assertSame('123456', $dto->getAmount()->getAmount());
-        $this->assertInstanceOf(Currency::class, $dto->getAmount()->getCurrency());
-        $this->assertSame('EUR', $dto->getAmount()->getCurrency()->getCode());
+        self::assertInstanceOf(Money::class, $dto->getAmount());
+        self::assertSame('123456', $dto->getAmount()->getAmount());
+        self::assertInstanceOf(Currency::class, $dto->getAmount()->getCurrency());
+        self::assertSame('EUR', $dto->getAmount()->getCurrency()->getCode());
     }
 
     public function testAmountWithNegativeValue(): void
@@ -62,7 +62,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame('-9999', $dto->getAmount()->getAmount());
+        self::assertSame('-9999', $dto->getAmount()->getAmount());
     }
 
     public function testAmountWithZeroValue(): void
@@ -74,7 +74,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame('0', $dto->getAmount()->getAmount());
+        self::assertSame('0', $dto->getAmount()->getAmount());
     }
 
     public function testAmountRoundingWithMoreThanTwoDecimals(): void
@@ -86,7 +86,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame('5056', $dto->getAmount()->getAmount());
+        self::assertSame('5056', $dto->getAmount()->getAmount());
     }
 
     public function testTypeFallsBackToOtherWhenNotProvided(): void
@@ -96,7 +96,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame(TransactionDto::TYPE_OTHER, $dto->getType());
+        self::assertSame(TransactionDto::TYPE_OTHER, $dto->getType());
     }
 
     public function testLabelIsNullWhenNotProvided(): void
@@ -106,7 +106,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertNull($dto->getLabel());
+        self::assertNull($dto->getLabel());
     }
 
     public function testNotesIsNullWhenNotProvided(): void
@@ -116,7 +116,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertNull($dto->getNotes());
+        self::assertNull($dto->getNotes());
     }
 
     public function testDateParsedAsAbsoluteDate(): void
@@ -128,13 +128,13 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertInstanceOf(AbsoluteDate::class, $dto->getDate());
-        $this->assertSame('2024-06-20', $dto->getDate()->__toString());
+        self::assertInstanceOf(AbsoluteDate::class, $dto->getDate());
+        self::assertSame('2024-06-20', $dto->getDate()->__toString());
     }
 
     public function testDateUsesEuropeParisTimezone(): void
     {
-        $this->assertSame('Europe/Paris', TransactionDto::TIMEZONE);
+        self::assertSame('Europe/Paris', TransactionDto::TIMEZONE);
 
         // Test a date that would be different in UTC vs Europe/Paris
         // 2024-01-15T23:30:00Z (UTC) is 2024-01-16T00:30:00 in Paris (winter time, UTC+1)
@@ -146,7 +146,7 @@ class TransactionDtoTest extends TestCase
         $dto = new TransactionDto($data);
 
         // In Europe/Paris, this would be the next day
-        $this->assertSame('2024-01-16', $dto->getDate()->__toString());
+        self::assertSame('2024-01-16', $dto->getDate()->__toString());
     }
 
     public function testDifferentCurrencies(): void
@@ -161,7 +161,7 @@ class TransactionDtoTest extends TestCase
 
             $dto = new TransactionDto($data);
 
-            $this->assertSame($currencyCode, $dto->getAmount()->getCurrency()->getCode());
+            self::assertSame($currencyCode, $dto->getAmount()->getCurrency()->getCode());
         }
     }
 
@@ -174,7 +174,7 @@ class TransactionDtoTest extends TestCase
 
         $dto = new TransactionDto($data);
 
-        $this->assertSame($type, $dto->getType());
+        self::assertSame($type, $dto->getType());
     }
 
     /**
