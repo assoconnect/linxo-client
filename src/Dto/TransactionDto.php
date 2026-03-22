@@ -27,7 +27,7 @@ class TransactionDto
     private ?string $notes;
     private string $type;
     private AbsoluteDate $date;
-    /** @var mixed[] */
+    /** @var Transaction */
     private array $data;
 
     /**
@@ -63,9 +63,11 @@ class TransactionDto
     {
         $this->id = $data['id'];
         $this->accountId = $data['account_id'];
+        /** @var non-empty-string $currencyCode */
+        $currencyCode = $data['amount']['currency'];
         $this->amount = new Money(
             intval(round((float) $data['amount']['amount'] * 100)),
-            new Currency($data['amount']['currency'])
+            new Currency($currencyCode)
         );
         $this->label = $data['enrichments']['display_label'] ?? null;
         $this->notes = $data['notes'] ?? null;

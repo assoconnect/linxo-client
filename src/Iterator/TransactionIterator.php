@@ -93,6 +93,8 @@ class TransactionIterator implements \Iterator
 
     public function current(): TransactionDto
     {
+        assert($this->transactions !== null && isset($this->transactions[$this->currentCursor]));
+
         return $this->transactions[$this->currentCursor];
     }
 
