@@ -24,8 +24,8 @@ class TransactionDtoTest extends TestCase
             'enrichments' => [
                 'display_label' => 'Grocery Store Purchase',
                 'date' => '2024-03-15T10:30:00+01:00',
+                'notes' => 'Weekly groceries',
             ],
-            'notes' => 'Weekly groceries',
             'type' => TransactionDto::TYPE_POINT_OF_SALE,
         ];
 
@@ -112,7 +112,7 @@ class TransactionDtoTest extends TestCase
     public function testNotesIsNullWhenNotProvided(): void
     {
         $data = $this->createBaseData();
-        unset($data['notes']);
+        unset($data['enrichments']['notes']);
 
         $dto = new TransactionDto($data);
 
@@ -218,8 +218,8 @@ class TransactionDtoTest extends TestCase
             'enrichments' => [
                 'display_label' => 'Test Transaction',
                 'date' => '2024-03-15T10:00:00+01:00',
+                'notes' => 'Test notes',
             ],
-            'notes' => 'Test notes',
             'type' => TransactionDto::TYPE_CREDIT,
         ];
 
