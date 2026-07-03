@@ -13,8 +13,7 @@ use Money\Money;
  *     id: string,
  *     account_id: string,
  *     amount: array{amount: string, currency: string},
- *     enrichments: array{display_label?: string, date: string},
- *     notes?: string,
+ *     enrichments: array{display_label?: string, date: string, notes?: string},
  *     type?: string
  * }
  */
@@ -70,7 +69,7 @@ class TransactionDto
             new Currency($currencyCode)
         );
         $this->label = $data['enrichments']['display_label'] ?? null;
-        $this->notes = $data['notes'] ?? null;
+        $this->notes = $data['enrichments']['notes'] ?? null;
         $this->type = $data['type'] ?? self::TYPE_OTHER;
         $this->date = AbsoluteDate::createInTimezone(
         // Linxo uses timestamps but their servers' timezone is Europe/Paris
