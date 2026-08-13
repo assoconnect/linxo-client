@@ -27,6 +27,7 @@ class TransactionDtoTest extends TestCase
                 'notes' => 'Weekly groceries',
             ],
             'type' => TransactionDto::TYPE_POINT_OF_SALE,
+            'remittance_information' => 'INVOICE 2024-0315',
         ];
 
         $dto = new TransactionDto($data);
@@ -36,6 +37,7 @@ class TransactionDtoTest extends TestCase
         self::assertSame('Grocery Store Purchase', $dto->getLabel());
         self::assertSame('Weekly groceries', $dto->getNotes());
         self::assertSame(TransactionDto::TYPE_POINT_OF_SALE, $dto->getType());
+        self::assertSame('INVOICE 2024-0315', $dto->getRemittanceInformation());
     }
 
     public function testAmountConvertedToMoneyInCents(): void
@@ -117,6 +119,45 @@ class TransactionDtoTest extends TestCase
         $dto = new TransactionDto($data);
 
         self::assertNull($dto->getNotes());
+    }
+
+    public function testRemittanceInformationReadFromRootOfThePayload(): void
+    {
+        $data = $this->createBaseData(['remittance_information' => 'INVOICE 2024-0117']);
+
+        $dto = new TransactionDto($data);
+
+        self::assertSame('INVOICE 2024-0117', $dto->getRemittanceInformation());
+    }
+
+    public function testRemittanceInformationReadFromEnrichments(): void
+    {
+        $data = $this->createBaseData(['enrichments' => ['remittance_information' => 'INVOICE 2024-0118']]);
+
+        $dto = new TransactionDto($data);
+
+        self::assertSame('INVOICE 2024-0118', $dto->getRemittanceInformation());
+    }
+
+    public function testRemittanceInformationAtRootTakesPrecedenceOverEnrichments(): void
+    {
+        $data = $this->createBaseData([
+            'remittance_information' => 'From the root',
+            'enrichments' => ['remittance_information' => 'From the enrichments'],
+        ]);
+
+        $dto = new TransactionDto($data);
+
+        self::assertSame('From the root', $dto->getRemittanceInformation());
+    }
+
+    public function testRemittanceInformationIsNullWhenNotProvided(): void
+    {
+        $data = $this->createBaseData();
+
+        $dto = new TransactionDto($data);
+
+        self::assertNull($dto->getRemittanceInformation());
     }
 
     public function testDateParsedAsAbsoluteDate(): void

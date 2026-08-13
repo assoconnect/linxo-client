@@ -13,8 +13,14 @@ use Money\Money;
  *     id: string,
  *     account_id: string,
  *     amount: array{amount: string, currency: string},
- *     enrichments: array{display_label?: string, date: string, notes?: string},
- *     type?: string
+ *     enrichments: array{
+ *         display_label?: string,
+ *         date: string,
+ *         notes?: string,
+ *         remittance_information?: string
+ *     },
+ *     type?: string,
+ *     remittance_information?: string
  * }
  */
 class TransactionDto
@@ -24,6 +30,7 @@ class TransactionDto
     private Money $amount;
     private ?string $label;
     private ?string $notes;
+    private ?string $remittanceInformation;
     private string $type;
     private AbsoluteDate $date;
     /** @var Transaction */
@@ -70,6 +77,11 @@ class TransactionDto
         );
         $this->label = $data['enrichments']['display_label'] ?? null;
         $this->notes = $data['enrichments']['notes'] ?? null;
+        // `notes` moved from the root to `enrichments` when Linxo switched to v3, so both locations
+        // are read here until we have observed where `remittance_information` actually lands
+        $this->remittanceInformation = $data['remittance_information']
+            ?? $data['enrichments']['remittance_information']
+            ?? null;
         $this->type = $data['type'] ?? self::TYPE_OTHER;
         $this->date = AbsoluteDate::createInTimezone(
         // Linxo uses timestamps but their servers' timezone is Europe/Paris
@@ -102,6 +114,14 @@ class TransactionDto
     public function getNotes(): ?string
     {
         return $this->notes;
+    }
+
+    /**
+     * Free-text reference sent along with the payment by the counterparty (ISO 20022 remittance information)
+     */
+    public function getRemittanceInformation(): ?string
+    {
+        return $this->remittanceInformation;
     }
 
     public function getType(): string
