@@ -16,11 +16,10 @@ use Money\Money;
  *     enrichments: array{
  *         display_label?: string,
  *         date: string,
- *         notes?: string,
- *         remittance_information?: string
+ *         notes?: string
  *     },
  *     type?: string,
- *     remittance_information?: string
+ *     remittance_information?: list<string>
  * }
  */
 class TransactionDto
@@ -77,11 +76,11 @@ class TransactionDto
         );
         $this->label = $data['enrichments']['display_label'] ?? null;
         $this->notes = $data['enrichments']['notes'] ?? null;
-        // `notes` moved from the root to `enrichments` when Linxo switched to v3, so both locations
-        // are read here until we have observed where `remittance_information` actually lands
-        $this->remittanceInformation = $data['remittance_information']
-            ?? $data['enrichments']['remittance_information']
-            ?? null;
+        // Linxo sends the ISO 20022 remittance information as one entry per unstructured line
+        $remittanceInformationLines = $data['remittance_information'] ?? [];
+        $this->remittanceInformation = [] === $remittanceInformationLines
+            ? null
+            : implode(' ', $remittanceInformationLines);
         $this->type = $data['type'] ?? self::TYPE_OTHER;
         $this->date = AbsoluteDate::createInTimezone(
         // Linxo uses timestamps but their servers' timezone is Europe/Paris
@@ -117,7 +116,8 @@ class TransactionDto
     }
 
     /**
-     * Free-text reference sent along with the payment by the counterparty (ISO 20022 remittance information)
+     * Free-text reference sent along with the payment by the counterparty (ISO 20022 remittance information),
+     * with all its unstructured lines joined by a space
      */
     public function getRemittanceInformation(): ?string
     {
