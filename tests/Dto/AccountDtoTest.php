@@ -7,6 +7,7 @@ namespace AssoConnect\LinxoClient\Tests\Dto;
 use AssoConnect\LinxoClient\Dto\AccountDto;
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\TranslatableMessage;
 
@@ -161,9 +162,7 @@ class AccountDtoTest extends TestCase
         self::assertSame('linxo', $message->getDomain());
     }
 
-    /**
-     * @dataProvider statusProvider
-     */
+    #[DataProvider('statusProvider')]
     public function testAllStatusConstants(string $status): void
     {
         $data = $this->createBaseData(['status' => $status]);

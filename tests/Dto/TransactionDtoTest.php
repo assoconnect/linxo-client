@@ -8,6 +8,7 @@ use AssoConnect\LinxoClient\Dto\TransactionDto;
 use AssoConnect\PHPDate\AbsoluteDate;
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TransactionDtoTest extends TestCase
@@ -206,9 +207,7 @@ class TransactionDtoTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider transactionTypeProvider
-     */
+    #[DataProvider('transactionTypeProvider')]
     public function testAllTransactionTypeConstants(string $type): void
     {
         $data = $this->createBaseData(['type' => $type]);
