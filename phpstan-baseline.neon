@@ -13,7 +13,7 @@ parameters:
 			path: src/ApiClient.php
 
 		-
-			message: '#^Parameter \#1 \$data of class AssoConnect\\LinxoClient\\Dto\\TransactionDto constructor expects array\{id\: string, account_id\: string, amount\: array\{amount\: string, currency\: string\}, enrichments\: array\{display_label\?\: string, date\: string, notes\?\: string, remittance_information\?\: string\}, type\?\: string, remittance_information\?\: string\}, array given\.$#'
+			message: '#^Parameter \#1 \$data of class AssoConnect\\LinxoClient\\Dto\\TransactionDto constructor expects array\{id\: string, account_id\: string, amount\: array\{amount\: string, currency\: string\}, enrichments\: array\{display_label\?\: string, date\: string, notes\?\: string\}, type\?\: string, remittance_information\?\: list\<string\>\}, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/ApiClient.php
@@ -67,9 +67,9 @@ parameters:
 			path: tests/Dto/TransactionDtoTest.php
 
 		-
-			message: '#^Parameter \#1 \$data of class AssoConnect\\LinxoClient\\Dto\\TransactionDto constructor expects array\{id\: string, account_id\: string, amount\: array\{amount\: string, currency\: string\}, enrichments\: array\{display_label\?\: string, date\: string, notes\?\: string, remittance_information\?\: string\}, type\?\: string, remittance_information\?\: string\}, array\<string, mixed\> given\.$#'
+			message: '#^Parameter \#1 \$data of class AssoConnect\\LinxoClient\\Dto\\TransactionDto constructor expects array\{id\: string, account_id\: string, amount\: array\{amount\: string, currency\: string\}, enrichments\: array\{display_label\?\: string, date\: string, notes\?\: string\}, type\?\: string, remittance_information\?\: list\<string\>\}, array\<string, mixed\> given\.$#'
 			identifier: argument.type
-			count: 15
+			count: 14
 			path: tests/Dto/TransactionDtoTest.php
 
 		-
