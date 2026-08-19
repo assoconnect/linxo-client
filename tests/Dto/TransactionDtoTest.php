@@ -8,6 +8,7 @@ use AssoConnect\LinxoClient\Dto\TransactionDto;
 use AssoConnect\PHPDate\AbsoluteDate;
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TransactionDtoTest extends TestCase
@@ -27,6 +28,7 @@ class TransactionDtoTest extends TestCase
                 'notes' => 'Weekly groceries',
             ],
             'type' => TransactionDto::TYPE_POINT_OF_SALE,
+            'remittance_information' => ['INVOICE 2024-0315'],
         ];
 
         $dto = new TransactionDto($data);
@@ -36,6 +38,7 @@ class TransactionDtoTest extends TestCase
         self::assertSame('Grocery Store Purchase', $dto->getLabel());
         self::assertSame('Weekly groceries', $dto->getNotes());
         self::assertSame(TransactionDto::TYPE_POINT_OF_SALE, $dto->getType());
+        self::assertSame('INVOICE 2024-0315', $dto->getRemittanceInformation());
     }
 
     public function testAmountConvertedToMoneyInCents(): void
@@ -119,6 +122,33 @@ class TransactionDtoTest extends TestCase
         self::assertNull($dto->getNotes());
     }
 
+    public function testRemittanceInformationLinesAreJoined(): void
+    {
+        $data = $this->createBaseData(['remittance_information' => ['INVOICE 2024-0117', 'ORDER 42']]);
+
+        $dto = new TransactionDto($data);
+
+        self::assertSame('INVOICE 2024-0117 ORDER 42', $dto->getRemittanceInformation());
+    }
+
+    public function testRemittanceInformationIsNullWhenNotProvided(): void
+    {
+        $data = $this->createBaseData();
+
+        $dto = new TransactionDto($data);
+
+        self::assertNull($dto->getRemittanceInformation());
+    }
+
+    public function testRemittanceInformationIsNullWhenNoLineIsProvided(): void
+    {
+        $data = $this->createBaseData(['remittance_information' => []]);
+
+        $dto = new TransactionDto($data);
+
+        self::assertNull($dto->getRemittanceInformation());
+    }
+
     public function testDateParsedAsAbsoluteDate(): void
     {
         $data = $this->createBaseData(['enrichments' => [
@@ -165,9 +195,7 @@ class TransactionDtoTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider transactionTypeProvider
-     */
+    #[DataProvider('transactionTypeProvider')]
     public function testAllTransactionTypeConstants(string $type): void
     {
         $data = $this->createBaseData(['type' => $type]);

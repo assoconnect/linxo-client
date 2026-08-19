@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AssoConnect\LinxoClient\Tests\Dto;
 
 use AssoConnect\LinxoClient\Dto\ConnectionDto;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ConnectionDtoTest extends TestCase
@@ -26,9 +27,7 @@ class ConnectionDtoTest extends TestCase
         self::assertSame('https://example.com/bnp-logo.png', $dto->getLogoUrl());
     }
 
-    /**
-     * @dataProvider statusProvider
-     */
+    #[DataProvider('statusProvider')]
     public function testAllStatusConstants(string $status): void
     {
         $data = $this->createBaseData(['status' => $status]);
