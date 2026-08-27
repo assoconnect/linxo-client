@@ -16,10 +16,10 @@ class TranslationCatalogueTest extends TestCase
 {
     private const string TRANSLATIONS_DIR = __DIR__ . '/../translations';
     private const string DOMAIN = 'linxo+intl-icu';
-    private const string REFERENCE_LOCALE = 'en_US';
+    private const string REFERENCE_LOCALE = 'en';
 
     /** Every locale the catalogues are expected to cover. */
-    private const array EXPECTED_LOCALES = ['en_US', 'fr_FR', 'es_ES'];
+    private const array EXPECTED_LOCALES = ['en', 'fr', 'es'];
 
     /** @return iterable<string, array{locale: string}> */
     public static function provideLocales(): iterable

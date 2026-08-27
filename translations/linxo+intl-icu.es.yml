@@ -19,7 +19,7 @@ transaction_type:
   INTERNAL_TRANSFER: 'Transferencia interna'
   POTENTIAL_TRANSFER: 'Transferencia'
   CHECK: 'Pago con cheque'
-  ELECTRONIC_PAYMENT: 'Remesa documentaria'
+  ELECTRONIC_PAYMENT: 'Título interbancario de pago'
   CASH: 'Pago en efectivo'
   DIRECT_DEPOSIT: 'Ingreso directo'
   DIRECT_DEBIT: 'Domiciliación puntual'

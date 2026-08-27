@@ -38,7 +38,7 @@ class TransactionDto
     /**
      * Possible transaction types
      * @link https://developers.linxo.com/reference-accounts-api/#operation/getTransaction
-     * @see translations/linxo.intl-icu.[locale].yml
+     * @see translations/linxo+intl-icu.[locale].yml
      */
     public const TYPE_CREDIT = 'CREDIT';
     public const TYPE_DEBIT = 'DEBIT';
